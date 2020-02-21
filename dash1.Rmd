@@ -1,0 +1,87 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    #theme: spacelab
+    orientation: rows
+    vertical_layout: fill
+    social: ["twitter","facebook","menu"]
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(knitr)
+library(DT)
+library(rpivotTable)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(openintro)
+library(highcharter)
+library(leaflet)
+library(dygraphs)
+
+```
+
+```{r}
+#install.packages("highcharter")
+install.packages('plyr', repos = "http://cran.us.r-project.org")
+
+```
+
+```{r}
+data <- read.csv("VehicleFailure.csv")
+```
+
+```{r}
+mycolors <- c("blue", "#FFC125", "darkgreen", "darkorange")
+```
+
+Interactive Data Visualization
+==========================================
+
+Row {data-width=600}
+-----------------------------------------
+
+### Views per day
+
+```{r}
+valueBox(round(mean(data$Mileage)),icon = 'fa-pencil', color = 'primary')
+```
+
+
+### Unique profiles per day
+
+```{r}
+valueBox(round(mean(data$lh)),icon = 'fa-comments', color = 'info')
+```
+
+
+### Spam/Bots
+
+```{r}
+valueBox(round(mean(data$fm)),icon = 'fa-trash', color = 'warning')
+```
+
+
+Row {data-width=500}
+-----------------------------------------
+
+### Bounce Rate
+```{r}
+gauge(32, min = 0, max = 100, symbol = '%', 
+      gaugeSectors(
+        success = c(80,100), warning = c(40,79), danger = c(0,39)
+        ))
+```
+
+### View Time
+```{r}
+gauge(7, min = 0, max = 10, symbol = '', 
+      gaugeSectors(
+        success = c(6,10), warning = c(4,5.9), danger = c(0,3.9)
+        ))
+```    
+
+
+
